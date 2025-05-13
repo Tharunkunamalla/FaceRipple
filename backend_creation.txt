@@ -1,0 +1,9 @@
+created server.js:
+    intialized PORT
+    added express and dotenv configs  // main express 
+    and used app.use("/api/auth/", authRoutes)
+
+created authroute.js in routes:
+    used router.post for method 
+    for each signup, signin, logout
+    and importing from auth.controlers.js from controllers
