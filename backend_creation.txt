@@ -37,4 +37,19 @@ At first in package.json file add or change this
     paste in .env as JWT_SECRET_KEY 
 
 
-6: .env in this we create PORT, and link MONGO_URI, STEAM_API_KEY and _SECRET
+6: .env in this we create PORT, and link MONGO_URI, STEAM_API_KEY and _SECRET  #important file
+
+
+
+Apps- used: 
+https://avatar-placeholder.iran.liara.run/ -(Avatar.placeholer.com) --> for at random Avatar
+https://getstream.io/ -(getstream) --> for video chats and chatting
+postman ---> To check and to run the User Signup and details
+mongodb ---> To store the user Data in the database 
+
+
+
+
+** Note**
+First run the backend and then use postman and mongodb
+
