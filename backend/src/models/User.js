@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // friend requests sent by the user and thier nums saved in array
     friends: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -48,15 +49,18 @@ const userSchema = new mongoose.Schema(
     ],
   },
   {
+    // to add createdAt and updatedAt fields
+    // to the schema
     timestamps: true,
   }
 );
 
 // for password hashing
-const User = mongoose.model("User", userSchema);
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
+    // if the password is not modified, skip hashing
+    // this is to prevent hashing the password again when updating the user
     return next();
   }
   try {
@@ -67,4 +71,7 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+// this should be below the userSchema then the model gets password hashed
+const User = mongoose.model("User", userSchema);
+
 export default User;
