@@ -42,6 +42,7 @@ At first in package.json file add or change this
 
 
 Apps- used: 
+#Github
 https://avatar-placeholder.iran.liara.run/ -(Avatar.placeholer.com) --> for at random Avatar
 https://getstream.io/ -(getstream) --> for video chats and chatting
 postman ---> To check and to run the User Signup and details
@@ -51,5 +52,5 @@ mongodb ---> To store the user Data in the database
 
 
 ** Note**
-First run the backend and then use postman and mongodb
+First run the backend and then use postman and mongodb for testing
 
