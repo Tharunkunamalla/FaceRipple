@@ -39,7 +39,8 @@ At first in package.json file add or change this
 
 6: .env in this we create PORT, and link MONGO_URI, STEAM_API_KEY and _SECRET  #important file
 
-
+7. stream.js file in lib :
+    used for creating the user in the getstream platform too... with valid token
 
 Apps- used: 
 #Github
