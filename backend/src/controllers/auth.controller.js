@@ -130,3 +130,25 @@ export function logout(req, res) {
   res.clearCookie("jwt");
   res.status(200).json({success: true, message: "Logged out successfully"});
 }
+
+export async function onboard(req, res) {
+  const {fullName, avatar} = req.body;
+  if (!fullName || !avatar) {
+    return res.status(400).json({message: "Please fill all the fields"});
+  }
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({message: "User not found"});
+    }
+    user.fullName = fullName;
+    user.profilePic = avatar;
+    await user.save();
+    res.status(200).json({success: true, user});
+  } catch (error) {
+    console.log("Error in onboarding controller", error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+}
