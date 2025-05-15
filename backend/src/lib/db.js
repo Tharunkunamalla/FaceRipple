@@ -1,3 +1,5 @@
+// this db is used to handle the authentication and authorization of the application
+// this db is used to connect to the mongodb database
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
