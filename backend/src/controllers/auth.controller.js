@@ -132,21 +132,64 @@ export function logout(req, res) {
 }
 
 export async function onboard(req, res) {
-  const {fullName, avatar} = req.body;
-  if (!fullName || !avatar) {
-    return res.status(400).json({message: "Please fill all the fields"});
-  }
   try {
-    const user = await User.findById(req.user._id);
-    if (!user) {
-      return res.status(404).json({message: "User not found"});
+    const userId = req.user._id;
+    const {fullName, bio, nativeLanguage, learningLanguage, location} =
+      req.body;
+
+    if (
+      !fullName ||
+      !bio ||
+      !nativeLanguage ||
+      !learningLanguage ||
+      !location
+    ) {
+      return res.status(400).json({
+        message: "Please fill all the fields",
+        missingFields: [
+          !fullName && "fullName",
+          !bio && "bio",
+          !nativeLanguage && "nativeLanguage",
+          !learningLanguage && "learningLanguage",
+          !location && "location",
+        ].filter(Boolean),
+      });
     }
-    user.fullName = fullName;
-    user.profilePic = avatar;
-    await user.save();
-    res.status(200).json({success: true, user});
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        ...req.body,
+        isOnboarded: true,
+      },
+      {new: true}
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    try {
+      await upsertStreamUser({
+        id: updatedUser._id.toString(),
+        name: updatedUser.fullName,
+        image: updatedUser.profilePic,
+      });
+      console.log(
+        `Stream user updated on onboarding successfully for ${updatedUser.fullName}`
+      );
+    } catch (streamError) {
+      console.log("Error in updating user in stream chat", streamError.message);
+    }
+
+    res.status(200).json({
+      success: true,
+      user: updatedUser,
+    });
   } catch (error) {
-    console.log("Error in onboarding controller", error);
+    console.log("Error in onboard controller", error);
     res.status(500).json({
       message: "Internal server error",
     });
