@@ -1,3 +1,4 @@
+// this user model is used to create the user schema
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 const userSchema = new mongoose.Schema(

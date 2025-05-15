@@ -1,3 +1,4 @@
+// this auth route is used to handle authentication related requests such as signup, login, logout, and onboarding. It uses the express router to define the routes and the corresponding controller functions to handle the requests. The protectRoute middleware is used to protect certain routes that require authentication. The router is then exported for use in the main server file.
 import express from "express";
 import {
   login,

@@ -1,3 +1,4 @@
+// this auth controller is used to handle authentication related requests such as signup, login, logout, and onboarding. It uses the User model to interact with the database and the jsonwebtoken library to create and verify JWT tokens. The controller functions handle the requests and responses, including error handling and validation. The upsertStreamUser function is used to create or update the user in the Stream chat service.
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import {upsertStreamUser} from "../lib/stream.js";

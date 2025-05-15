@@ -1,3 +1,5 @@
+// This middleware is used to protect routes by checking if the user is authenticated
+// and has a valid JWT token. If the token is valid, it retrieves the user from the database
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
