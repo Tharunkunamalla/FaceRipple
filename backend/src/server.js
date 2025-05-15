@@ -1,3 +1,4 @@
+// this server is used to handle the authentication and authorization of the application
 import express from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";

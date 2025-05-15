@@ -171,6 +171,8 @@ export async function onboard(req, res) {
       });
     }
 
+    // Update the Stream user with the new information
+    // const streamUser = await getStreamUser(userId);
     try {
       await upsertStreamUser({
         id: updatedUser._id.toString(),
