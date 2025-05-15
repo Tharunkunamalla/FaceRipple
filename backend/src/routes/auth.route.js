@@ -11,7 +11,8 @@ const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/logout", logout);
+router.post("/logout", logout); // why logout is a post request
+// because we are sending the token in the request body to invalidate it
 
 router.post("/onboarding", protectRoute, onboard);
 
