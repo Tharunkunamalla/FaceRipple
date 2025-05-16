@@ -43,16 +43,20 @@ At first in package.json file add or change this
     used for creating the user in the getstream platform too... with valid token
 
 
-8. User.controller in controller: 
+8. Friend Request in models :
+    This file defines the friend request model for the application.
+    It uses Mongoose to define the schema and model for friend requests.
+
+9. User.controller in controller: 
     this file contains the logic for user-related operations
     such as getting recommended users, getting friends, and sending friend requests
 
-9. chat.controller in controller:
+10. chat.controller in controller:
     this file contains the logic for user-related operations
 
-10. user.route in Routes:
+11. user.route in Routes:
     This file defines the routes for user-related operations
-11. chat.route in Routes:
+12. chat.route in Routes:
     This file defines the routes for chat-related operations
 
 
