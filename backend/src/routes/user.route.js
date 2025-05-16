@@ -1,3 +1,4 @@
+// This file defines the routes for user-related operations
 import express from "express";
 import {protectRoute} from "../middleware/auth.middleware.js";
 import {
