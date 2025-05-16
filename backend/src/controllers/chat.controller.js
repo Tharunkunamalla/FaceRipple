@@ -1,3 +1,4 @@
+// this file contains the logic for user-related operations
 import {generateStreamToken} from "../lib/stream.js";
 
 export async function getStreamToken(req, res) {
