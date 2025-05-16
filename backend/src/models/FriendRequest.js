@@ -1,3 +1,5 @@
+// This file defines the friend request model for the application.
+// It uses Mongoose to define the schema and model for friend requests.
 import mongoose from "mongoose";
 
 const friendRequestSchema = new mongoose.Schema(
