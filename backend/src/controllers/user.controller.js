@@ -1,3 +1,5 @@
+// this file contains the logic for user-related operations
+// such as getting recommended users, getting friends, and sending friend requests
 import User from "../models/User.js";
 import FriendRequest from "../models/FriendRequest.js";
 
@@ -98,6 +100,51 @@ export async function sendFriendRequest(req, res) {
     res.status(201).json(friendRequest);
   } catch (error) {
     console.error("Error sending friend request:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+export async function acceptFriendRequest(req, res) {
+  try {
+    const {id: recipientId} = req.params;
+    const friendRequest = await FriendRequest.findById(recipientId);
+    if (!friendRequest) {
+      return res.status(404).json({
+        success: false,
+        message: "Friend request not found",
+      });
+    }
+
+    // verify the current user is the recipient of the friend request
+    if (friendRequest.recipient.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to accept this friend request",
+      });
+    }
+    friendRequest.status = "accepted";
+    await friendRequest.save();
+
+    // add each user to the other's friends array
+    // $addToSet is used to prevent duplicates
+    // this is done by updating the friends array of both users
+    await User.findByIdAndUpdate(friendRequest.sender, {
+      $addToSet: {friends: req.user.id},
+    });
+    await User.findByIdAndUpdate(req.user.id, {
+      $addToSet: {friends: friendRequest.sender},
+    });
+    // remove the friend request from the database
+    await FriendRequest.findByIdAndDelete(friendRequest.id);
+    res.status(200).json({
+      success: true,
+      message: "Friend request accepted successfully",
+    });
+  } catch (error) {
+    console.error("Error accepting friend request:", error);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",
