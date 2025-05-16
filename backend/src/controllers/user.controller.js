@@ -151,3 +151,50 @@ export async function acceptFriendRequest(req, res) {
     });
   }
 }
+
+export async function getFriendRequests(req, res) {
+  try {
+    // Get incoming friend requests for the current user
+    // and outgoing friend requests sent by the current user
+    const incomingReqs = await FriendRequest.find({
+      recipient: req.user.id,
+      status: "pending",
+    })
+      .populate("sender", "fullName profilePic nativeLanguage learningLanguage")
+      .select("-__v");
+    // populate the sender field with the user's data
+    // and exclude the __v field from the response
+    const acceptedReqs = await FriendRequest.find({
+      sender: req.user.id,
+      status: "accepted",
+    }).populate("recipient", "fullName profilePic");
+
+    res.status(200).json({incomingReqs, acceptedReqs});
+  } catch (error) {
+    console.error("Error fetching friend requests:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+export async function getOutgoingFriendReqs(req, res) {
+  try {
+    // Get outgoing friend requests sent by the current user
+    const outgoingReqs = await FriendRequest.find({
+      sender: req.user.id,
+      status: "pending",
+    }).populate(
+      "recipient",
+      "fullName profilePic nativeLanguage learningLanguage"
+    );
+    res.status(200).json({outgoingReqs});
+  } catch (error) {
+    console.error("Error fetching outgoing friend requests:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}

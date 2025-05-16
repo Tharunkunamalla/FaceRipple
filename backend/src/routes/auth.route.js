@@ -14,6 +14,7 @@ router.post("/login", login);
 router.post("/logout", logout); // why logout is a post request
 // because we are sending the token in the request body to invalidate it
 
+// TODO: Add forgot password functionality and send welcome email or rest-password email
 router.post("/onboarding", protectRoute, onboard);
 
 // Checks if the user is logged in/ not
