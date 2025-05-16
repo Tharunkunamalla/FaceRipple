@@ -52,7 +52,8 @@ At first in package.json file add or change this
 
 10. user.route in Routes:
     This file defines the routes for user-related operations
-11. 
+11. chat.route in Routes:
+    This file defines the routes for chat-related operations
 
 
 Apps- used: 
