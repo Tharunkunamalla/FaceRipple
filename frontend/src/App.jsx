@@ -10,17 +10,7 @@ import CallPage from "./pages/CallPage.jsx";
 
 const App = () => {
   return (
-    <div className="h-screen text-white " data-theme="dark">
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/notifications" element={<NotificationPage />} />
-        <Route path="/call" element={<CallPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/onboarding" element={<OnboardingPage />} />
-      </Routes>
-    </div>
+    
   );
 };
 
