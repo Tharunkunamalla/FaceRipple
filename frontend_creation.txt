@@ -1,0 +1,2 @@
+Installed React Dom and changed in Main.jsx and add tailwind css
+Added Daisy-Ui in tailwind
