@@ -1,2 +1,7 @@
 Installed React Dom and changed in Main.jsx and add tailwind css
-Added Daisy-Ui in tailwind
+Added Daisy-Ui in tailwind done changes in tailwind configs
+Installed React-Hot-Toast and imported
+
+Added Pages folder and created Pages
+Connected Pages to App.jsx and imported them
+and connected Toaster
