@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
       </Routes>
-      <Toaster />
+      <Toaster /> // This will render the toast notifications
     </div>
   );
 };
