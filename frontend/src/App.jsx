@@ -10,34 +10,21 @@ import CallPage from "./pages/CallPage.jsx";
 import {useEffect, useState} from "react";
 
 import toast, {Toaster} from "react-hot-toast";
+import {useQuery} from "@tanstack/react-query";
+import axios from "axios";
 
 const App = () => {
-  // axios
-  // react-query tanstack-query
-  const [data, setData] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // tanstack-query
+  const {data, isLoading, error} = useQuery({
+    queryKey: ["todos"],
 
-  useEffect(() => {
-    const getData = async () => {
-      setisLoading(true);
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos"
-        );
-        const json = await response.json();
-        setData(json);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setisLoading(false);
-      }
-    };
+    queryFn: async () => {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      return res.data;
+    },
+  });
+  console.log(data);
 
-    getData();
-  }, []);
-
-  console.log("data", data);
   return (
     <div className="h-screen text-white " data-theme="dark">
       <button onClick={() => toast.success("Toast Added")}>
