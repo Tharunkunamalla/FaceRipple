@@ -7,6 +7,7 @@ import OnboardingPage from "./pages/OnboardingPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
+import {useEffect, useState} from "react";
 
 import toast, {Toaster} from "react-hot-toast";
 
@@ -22,7 +23,7 @@ const App = () => {
       setisLoading(true);
       try {
         const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos/1"
+          "https://jsonplaceholder.typicode.com/todos"
         );
         const json = await response.json();
         setData(json);
