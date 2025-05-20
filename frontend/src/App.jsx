@@ -1,4 +1,4 @@
-import React from "react";
+import React, {use} from "react";
 import {Route, Routes} from "react-router";
 import HomePage from "./pages/HomePage.jsx";
 import NotificationPage from "./pages/NotificationPage.jsx";
@@ -13,6 +13,30 @@ import toast, {Toaster} from "react-hot-toast";
 const App = () => {
   // axios
   // react-query tanstack-query
+  const [data, setData] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      setisLoading(true);
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/todos/1"
+        );
+        const json = await response.json();
+        setData(json);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setisLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
+
+  console.log("data", data);
   return (
     <div className="h-screen text-white " data-theme="dark">
       <button onClick={() => toast.success("Toast Added")}>
