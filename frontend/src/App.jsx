@@ -11,6 +11,8 @@ import CallPage from "./pages/CallPage.jsx";
 import toast, {Toaster} from "react-hot-toast";
 
 const App = () => {
+  // axios
+  // react-query tanstack-query
   return (
     <div className="h-screen text-white " data-theme="dark">
       <button onClick={() => toast.success("Toast Added")}>
