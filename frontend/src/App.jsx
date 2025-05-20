@@ -11,15 +11,15 @@ import {useEffect, useState} from "react";
 
 import toast, {Toaster} from "react-hot-toast";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
+import {axiosInstance} from "./lib/axios.js";
 
 const App = () => {
   // tanstack-query
   const {data, isLoading, error} = useQuery({
-    queryKey: ["todos"],
+    queryKey: ["authUser"],
 
     queryFn: async () => {
-      const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      const res = await axiosInstance.get("/api/auth/me");
       return res.data;
     },
   });
