@@ -29,6 +29,7 @@ const SignupPage = () => {
   // ntg
 
   // ntg1
+  // ntg2
 };
 
 export default SignupPage;
