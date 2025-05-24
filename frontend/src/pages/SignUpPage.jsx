@@ -25,11 +25,6 @@ const SignupPage = () => {
     </div>
   );
   return <div></div>;
-
-  // ntg
-
-  // ntg1
-  // ntg2
 };
 
 export default SignupPage;
