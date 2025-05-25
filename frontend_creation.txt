@@ -6,4 +6,6 @@ Added Pages folder and created Pages
 Connected Pages to App.jsx and imported them
 and connected Toaster
 
+
+
 this is in editing
