@@ -1,7 +1,10 @@
-import React, {useState} from "react";
+import React, {use, useState} from "react";
 import {BotMessageSquare} from "lucide-react";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 import {Link} from "react-router";
+import {signup} from "../lib/api";
+
 const SignupPage = () => {
   const [signupData, setSignupData] = useState({
     fullName: "",
@@ -9,8 +12,19 @@ const SignupPage = () => {
     password: "",
   });
 
+  const queryClient = useQueryClient(); // Initialize your query client here if needed
+  const {
+    mutate: signupMutation,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: signup,
+    onSuccess: () => queryClient.invalidateQueries({queryKey: ["authUser"]}),
+  });
+  // Define your mutation function here
   const handelSignup = (e) => {
     e.preventDefault();
+    signupMutation(signupData);
   };
   return (
     <div
@@ -28,6 +42,14 @@ const SignupPage = () => {
               FaceRipple
             </span>
           </div>
+          {/* Error message if any */}
+
+          {error && (
+            <div className="alert alert-error mb-4">
+              <span>{error.response.data.message}</span>
+            </div>
+          )}
+
           <div className="w-full">
             <form onSubmit={handelSignup}>
               <div className="space-y-4">
@@ -123,7 +145,14 @@ const SignupPage = () => {
  w-full"
                   type="submit"
                 >
-                  Create Account
+                  {isPending ? (
+                    <>
+                      <span className="loading loading-spinner loading-xs"></span>
+                      loading...
+                    </>
+                  ) : (
+                    "Create Account"
+                  )}
                 </button>
                 <div className="text-center mt-4">
                   {" "}
