@@ -1,7 +1,9 @@
 import React from "react";
 
 const OnboardingPage = () => {
-  return <div>/* Your component content */</div>;
+  const {isLoading, authUser} = useAuthUser();
+
+  return <div></div>;
 };
 
 export default OnboardingPage;
