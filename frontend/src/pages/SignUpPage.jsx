@@ -31,7 +31,7 @@ const SignupPage = () => {
       className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
       data-theme="forest"
     >
-      <div className="border border—primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
+      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
         {/* Sign up form left side */}
         <div className="w-full lg:w-1/2 p-4  sm:p-8 flex flex-col">
           {/* LOGO */}
@@ -141,7 +141,7 @@ const SignupPage = () => {
                   </div>
                 </div>
                 <button
-                  className="btn bg-gradient-to-r from-[#37506b] via-[#4F7FFF] to-[#348ee8]  rounded-lg
+                  className="btn bg-gradient-to-r from-[#436b96] via-[#4F7FFF] to-[#348ee8]  rounded-lg
  w-full"
                   type="submit"
                 >
@@ -167,7 +167,6 @@ const SignupPage = () => {
             </form>
           </div>
         </div>
-        {/* Sign up form right side */}
         {/* SIGNUP FORM - RIGHT SIDE */}
         <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/40 items-center justify-center">
           <div className="max-w-md p-8">
