@@ -4,6 +4,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 import {Link} from "react-router";
 import {signup} from "../lib/api";
+import useSignUp from "../hooks/useSignUp";
 
 const SignupPage = () => {
   const [signupData, setSignupData] = useState({
@@ -12,15 +13,19 @@ const SignupPage = () => {
     password: "",
   });
 
-  const queryClient = useQueryClient(); // Initialize your query client here if needed
-  const {
-    mutate: signupMutation,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: signup,
-    onSuccess: () => queryClient.invalidateQueries({queryKey: ["authUser"]}),
-  });
+  // const queryClient = useQueryClient(); // Initialize your query client here if needed
+  // const {
+  //   mutate: signupMutation,
+  //   isPending,
+  //   error,
+  // } = useMutation({
+  //   mutationFn: signup,
+  //   onSuccess: () => queryClient.invalidateQueries({queryKey: ["authUser"]}),
+  // });
+
+  //Optimized version: custom-hook
+  const {isPending, error, signupMutation} = useSignUp();
+
   // Define your mutation function here
   const handelSignup = (e) => {
     e.preventDefault();
