@@ -5,7 +5,7 @@ const useAuthUser = () => {
   const authUser = useQuery({
     queryKey: ["authUser"],
     queryFn: getAuthUser,
-    retry: false,
+    retry: false, // auth checking used in --const{authUser} = useAuthUser
   });
 
   return {
