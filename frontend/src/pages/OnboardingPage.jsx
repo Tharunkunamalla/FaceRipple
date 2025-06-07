@@ -106,7 +106,7 @@ const OnboardingPage = () => {
               />
             </div>
 
-            {/* BIO */}
+            {/* Bio*/}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Bio</span>
