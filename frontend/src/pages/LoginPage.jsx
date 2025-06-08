@@ -32,13 +32,16 @@ const LoginPage = () => {
       className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
       data-theme="forest"
     >
-      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
+      <div
+        className="border flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden "
+        style={{borderColor: "#4F7FFF", opacity: 0.9}}
+      >
         {/* LOGIN FORM SECTION */}
-        <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
+        <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col ">
           {/* LOGO */}
-          <div className="mb-4 flex items-center justify-start gap-2">
-            <BotMessageSquare className="size-9 text-primary" />
-            <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary  tracking-wider">
+          <div className="mb-4 flex items-center justify-start gap-2 ">
+            <BotMessageSquare className="size-9 text-[#4F7FFF]" />
+            <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-[#476686] via-[#4F7FFF] to-[#348ee8]  tracking-wider">
               FaceRipple
             </span>
           </div>
@@ -113,7 +116,7 @@ const LoginPage = () => {
                       Don't have an account?{" "}
                       <Link
                         to="/signup"
-                        className="text-primary hover:underline"
+                        className="text-[#4F7FFF] hover:underline"
                       >
                         Create one
                       </Link>
@@ -126,12 +129,15 @@ const LoginPage = () => {
         </div>
 
         {/* IMAGE SECTION */}
-        <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/40 items-center justify-center">
+        <div
+          className="hidden lg:flex w-full lg:w-1/2 items-center justify-center"
+          style={{backgroundColor: "#4F7FFF", opacity: 0.9}}
+        >
           <div className="max-w-md p-8">
             {/* Illustration */}
             <div className="relative aspect-square max-w-sm mx-auto">
               <img
-                src="/s-i.png"
+                src="/s-i-1.png"
                 alt="Language connection illustration"
                 className="w-full h-full"
               />
@@ -141,7 +147,7 @@ const LoginPage = () => {
               <h2 className="text-xl font-semibold">
                 Connect with language partners worldwide
               </h2>
-              <p className="opacity-70">
+              <p className="opacity-80">
                 Practice conversations, make friends, and improve your language
                 skills together
               </p>

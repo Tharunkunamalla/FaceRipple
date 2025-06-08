@@ -36,12 +36,15 @@ const SignupPage = () => {
       className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
       data-theme="forest"
     >
-      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
+      <div
+        className="border flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden"
+        style={{borderColor: "#4F7FFF", opacity: 0.9}}
+      >
         {/* Sign up form left side */}
         <div className="w-full lg:w-1/2 p-4  sm:p-8 flex flex-col">
           {/* LOGO */}
           <div className="mb-4 flex items-center justify-start gap-2">
-            <BotMessageSquare className="size-9 text-primary" />{" "}
+            <BotMessageSquare className="size-9 text-[#4F7FFF]" />{" "}
             {/* if w and h is same then use size*/}
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-[#37506b] via-[#4F7FFF] to-[#4583c1] tracking-wider">
               FaceRipple
@@ -133,12 +136,12 @@ const SignupPage = () => {
                         I agree to the{" "}
                         <a
                           href="/terms"
-                          className="text-primary hover:underline"
+                          className="text-[#4F7FFF] hover:underline"
                         >
                           Terms of services{" "}
                         </a>
                         and{" "}
-                        <span className="text-primary hover:underline">
+                        <span className="text-[#4F7FFF] hover:underline">
                           privacy policy
                         </span>
                       </span>
@@ -163,7 +166,10 @@ const SignupPage = () => {
                   {" "}
                   <p className="text-sm">
                     Already have an Account?{" "}
-                    <Link to="/login" className="text-primary hover:underline">
+                    <Link
+                      to="/login"
+                      className="text-[#4F7FFF] hover:underline"
+                    >
                       Sign in
                     </Link>
                   </p>
@@ -173,12 +179,12 @@ const SignupPage = () => {
           </div>
         </div>
         {/* SIGNUP FORM - RIGHT SIDE */}
-        <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/40 items-center justify-center">
+        <div className="hidden lg:flex w-full lg:w-1/2 bg-[#4F7FFF]/80 items-center justify-center">
           <div className="max-w-md p-8">
             {/* Illustration */}
             <div className="relative aspect-square max-w-sm mx-auto">
               <img
-                src="/s-i.png" // add your actual image src here
+                src="/s-i-1.png" // add your actual image src here
                 alt="Language connection illustration"
                 className="w-full h-full object-contain"
               />
@@ -187,7 +193,7 @@ const SignupPage = () => {
               <h2 className="text-xl font-semibold">
                 Connect with language partners worldwide
               </h2>
-              <p className=" opacity-70">
+              <p className=" opacity-90">
                 Practice conversations, make friends, and improve your language
                 skills together
               </p>

@@ -4,10 +4,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {
-        primary: "#4F7FFF",
-        secondary: "#4F7FFF",
-      },
+      // colors: {
+      //   primary: "#4F7FFF", // default color
+      //   secondary: "#4F7FFF",
+      // },
     },
   },
   plugins: [daisyui],
