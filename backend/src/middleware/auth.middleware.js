@@ -2,28 +2,31 @@
 // and has a valid JWT token. If the token is valid, it retrieves the user from the database
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-
 export const protectRoute = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
+    // console.log("JWT cookie:", token);
 
     if (!token) {
-      return res.status(401).json({message: "Unauthorized- No token provided"});
+      return res
+        .status(401)
+        .json({message: "Unauthorized - No token provided"});
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    if (!decoded) {
-      return res.status(401).json({message: "Unauthorized- Invalid token"});
+    // console.log("Decoded token:", decoded);
+
+    const user = await User.findById(decoded.userId).select("-password");
+    // console.log("Found user:", user);
+
+    if (!user) {
+      return res.status(401).json({message: "Unauthorized - User not found"});
     }
 
-    const user = await User.findById(decoded.userId).select("-password"); // Exclude password from the user object (-password) option will be used to exclude the password field from the user object
-    if (!user) {
-      return res.status(401).json({message: "Unauthorized- User not found"});
-    }
     req.user = user;
     next();
   } catch (error) {
-    console.error("Error in auth middleware", error);
+    console.error("Error in auth middleware", error.message);
     return res.status(401).json({message: "Unauthorized"});
   }
 };

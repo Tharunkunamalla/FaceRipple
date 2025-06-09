@@ -1,23 +1,21 @@
-// This file defines the routes for user-related operations in the application.
 import express from "express";
 import {protectRoute} from "../middleware/auth.middleware.js";
 import {
-  getFriends,
-  getRecommendedUsers,
-  sendFriendRequest,
   acceptFriendRequest,
   getFriendRequests,
+  getMyFriends,
   getOutgoingFriendReqs,
+  getRecommendedUsers,
+  sendFriendRequest,
 } from "../controllers/user.controller.js";
+
 const router = express.Router();
 
-//apply the protectRoute middleware to all routes in this router
+// apply auth middleware to all routes
 router.use(protectRoute);
 
-// Todo: Add a Reject Friend Request route
-// Define routes
 router.get("/", getRecommendedUsers);
-router.get("/friends", getFriends);
+router.get("/friends", getMyFriends);
 
 router.post("/friend-request/:id", sendFriendRequest);
 router.put("/friend-request/:id/accept", acceptFriendRequest);
