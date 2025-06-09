@@ -1,36 +1,42 @@
-import React, {use, useState} from "react";
+import React, {useState} from "react";
 import {BotMessageSquare} from "lucide-react";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router"; // or "react-router-dom" if using v6
 import {signup} from "../lib/api";
-import useSignUp from "../hooks/useSignUp";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+
   const [signupData, setSignupData] = useState({
     fullName: "",
     email: "",
     password: "",
   });
 
-  // const queryClient = useQueryClient(); // Initialize your query client here if needed
-  // const {
-  //   mutate: signupMutation,
-  //   isPending,
-  //   error,
-  // } = useMutation({
-  //   mutationFn: signup,
-  //   onSuccess: () => queryClient.invalidateQueries({queryKey: ["authUser"]}),
-  // });
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
 
-  //Optimized version: custom-hook
-  const {isPending, error, signupMutation} = useSignUp();
-
-  // Define your mutation function here
-  const handelSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    signupMutation(signupData);
+    setIsPending(true);
+    setError(null);
+
+    try {
+      const data = await signup(signupData);
+      console.log("Signup response:", data);
+
+      // Backend sets the cookie; just check success flag
+      if (data?.success) {
+        navigate("/"); // ✅ Redirect to home/dashboard
+      } else {
+        setError({response: {data: {message: "Signup failed"}}});
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsPending(false);
+    }
   };
+
   return (
     <div
       className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
@@ -41,25 +47,26 @@ const SignupPage = () => {
         style={{borderColor: "#4F7FFF", opacity: 0.9}}
       >
         {/* Sign up form left side */}
-        <div className="w-full lg:w-1/2 p-4  sm:p-8 flex flex-col">
+        <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
           {/* LOGO */}
           <div className="mb-4 flex items-center justify-start gap-2">
-            <BotMessageSquare className="size-9 text-[#4F7FFF]" />{" "}
-            {/* if w and h is same then use size*/}
+            <BotMessageSquare className="size-9 text-[#4F7FFF]" />
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-[#37506b] via-[#4F7FFF] to-[#4583c1] tracking-wider">
               FaceRipple
             </span>
           </div>
-          {/* Error message if any */}
 
+          {/* Error message if any */}
           {error && (
             <div className="alert alert-error mb-4">
-              <span>{error.response.data.message}</span>
+              <span>
+                {error?.response?.data?.message || "Something went wrong"}
+              </span>
             </div>
           )}
 
           <div className="w-full">
-            <form onSubmit={handelSignup}>
+            <form onSubmit={handleSignup}>
               <div className="space-y-4">
                 <div>
                   <h2 className="text-xl font-semibold">Create an Account</h2>
@@ -78,10 +85,7 @@ const SignupPage = () => {
                       className="input input-bordered w-full"
                       value={signupData.fullName}
                       onChange={(e) =>
-                        setSignupData({
-                          ...signupData,
-                          fullName: e.target.value,
-                        })
+                        setSignupData({...signupData, fullName: e.target.value})
                       }
                       required
                     />
@@ -96,10 +100,7 @@ const SignupPage = () => {
                       className="input input-bordered w-full"
                       value={signupData.email}
                       onChange={(e) =>
-                        setSignupData({
-                          ...signupData,
-                          email: e.target.value,
-                        })
+                        setSignupData({...signupData, email: e.target.value})
                       }
                       required
                     />
@@ -114,10 +115,7 @@ const SignupPage = () => {
                       className="input input-bordered w-full"
                       value={signupData.password}
                       onChange={(e) =>
-                        setSignupData({
-                          ...signupData,
-                          password: e.target.value,
-                        })
+                        setSignupData({...signupData, password: e.target.value})
                       }
                       required
                     />
@@ -125,7 +123,7 @@ const SignupPage = () => {
                       Password must be at least 6 characters long
                     </p>
                   </div>
-                  <div className="form-control ">
+                  <div className="form-control">
                     <label className="label cursor-pointer justify-start gap-2">
                       <input
                         type="checkbox"
@@ -138,8 +136,8 @@ const SignupPage = () => {
                           href="/terms"
                           className="text-[#4F7FFF] hover:underline"
                         >
-                          Terms of services{" "}
-                        </a>
+                          Terms of services
+                        </a>{" "}
                         and{" "}
                         <span className="text-[#4F7FFF] hover:underline">
                           privacy policy
@@ -149,8 +147,7 @@ const SignupPage = () => {
                   </div>
                 </div>
                 <button
-                  className="btn bg-gradient-to-r from-[#436b96] via-[#4F7FFF] to-[#348ee8]  rounded-lg
- w-full"
+                  className="btn bg-gradient-to-r from-[#436b96] via-[#4F7FFF] to-[#348ee8] rounded-lg w-full"
                   type="submit"
                 >
                   {isPending ? (
@@ -163,7 +160,6 @@ const SignupPage = () => {
                   )}
                 </button>
                 <div className="text-center mt-4">
-                  {" "}
                   <p className="text-sm">
                     Already have an Account?{" "}
                     <Link
@@ -178,13 +174,13 @@ const SignupPage = () => {
             </form>
           </div>
         </div>
+
         {/* SIGNUP FORM - RIGHT SIDE */}
         <div className="hidden lg:flex w-full lg:w-1/2 bg-[#4F7FFF]/80 items-center justify-center">
           <div className="max-w-md p-8">
-            {/* Illustration */}
             <div className="relative aspect-square max-w-sm mx-auto">
               <img
-                src="/s-i-1.png" // add your actual image src here
+                src="/s-i-1.png"
                 alt="Language connection illustration"
                 className="w-full h-full object-contain"
               />
@@ -193,7 +189,7 @@ const SignupPage = () => {
               <h2 className="text-xl font-semibold">
                 Connect with language partners worldwide
               </h2>
-              <p className=" opacity-90">
+              <p className="opacity-90">
                 Practice conversations, make friends, and improve your language
                 skills together
               </p>
@@ -203,7 +199,6 @@ const SignupPage = () => {
       </div>
     </div>
   );
-  return <div></div>;
 };
 
 export default SignupPage;
