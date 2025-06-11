@@ -8,6 +8,9 @@ export default {
       //   primary: "#4F7FFF", // default color
       //   secondary: "#4F7FFF",
       // },
+      maxWidth: {
+        screen: "100vw",
+      },
     },
   },
   plugins: [daisyui],
