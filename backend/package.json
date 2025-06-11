@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "dotenv": "^16.5.0",
     "express": "^4.21.0",
     "express-session": "^1.18.1",
+    "faceripple": "file:..",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
     "stream-chat": "^8.60.0"
