@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build",
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "npx vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@stream-io/video-react-sdk": "^1.18.4",
