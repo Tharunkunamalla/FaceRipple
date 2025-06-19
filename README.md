@@ -111,7 +111,7 @@ npm run dev
 
 👤 **Tharun Kunamalla**
 💬 *Connecting friends through learning*
-📫 [LinkedIn](https://linkedin.com/in/tharun-kunamalla) 
+📫 [LinkedIn](https://linkedin.com/in/tharun-kunamalla-) 
 
 ---
 
