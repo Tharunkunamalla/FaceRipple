@@ -29,7 +29,7 @@
 
 ---
 
-### 🌗 Dark/Light Theme Toggle
+### 🌗 Theme's Toggle
 ![Theme Toggle](./images/theme-toggle.png)
 
 ---
@@ -79,7 +79,7 @@ npm run dev
 * 🧑‍🤝‍🧑 Send/Accept Friend Requests
 * 💬 Real-time Chat Integration (GetStream)
 * 📞 Peer-to-Peer Video Calling
-* 🌗 Dark/Light Theme Toggle
+* 🌗 35+ Theme's Toggle
 * ⚡ Fast and Responsive UI
 * 🛠️ RESTful APIs
 
@@ -111,7 +111,7 @@ npm run dev
 
 👤 **Tharun Kunamalla**
 💬 *Connecting friends through learning*
-📫 [LinkedIn](https://linkedin.com/in/your-profile) | [GitHub](https://github.com/your-username)
+📫 [LinkedIn](https://linkedin.com/in/tharun-kunamalla) 
 
 ---
 
