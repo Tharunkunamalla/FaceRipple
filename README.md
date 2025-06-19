@@ -1,7 +1,7 @@
 
 # 🌐 FaceRipple — Learn, Chat, and Grow Together!
 
-(./images/.png) 
+<img src='frontend/public/brand.png'>
 
 **FaceRipple** is a real-time chat and video call application that brings friends together to **learn new languages** interactively. Built with the MERN stack, it features secure authentication, friend requests, dark/light themes, and seamless communication using GetStream API.
 
@@ -82,13 +82,6 @@ npm run dev
 * 🌗 Dark/Light Theme Toggle
 * ⚡ Fast and Responsive UI
 * 🛠️ RESTful APIs
-
----
-
-## 📽️ Demo (Optional)
-
-> [🔗 Live Demo Link](https://your-live-app-link.com)
-> *(You can embed a video/GIF demo here if hosted)*
 
 ---
 
