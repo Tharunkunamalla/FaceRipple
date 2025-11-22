@@ -7,8 +7,14 @@ export async function getRecommendedUsers(req, res) {
     const currentUser = req.user;
 
     // Add pagination support to prevent loading too many users at once
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20; // Default to 20 users per page
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 20; // Default to 20 users per page
+    
+    // Validate pagination parameters
+    if (isNaN(page) || page < 1) page = 1;
+    if (isNaN(limit) || limit < 1) limit = 20;
+    if (limit > 100) limit = 100; // Cap at 100 to prevent excessive data loading
+    
     const skip = (page - 1) * limit;
 
     const recommendedUsers = await User.find({
@@ -139,11 +145,15 @@ export async function getFriendRequests(req, res) {
       FriendRequest.find({
         recipient: req.user.id,
         status: "pending",
-      }).populate("sender", "fullName profilePic nativeLanguage learningLanguage"),
+      })
+        .populate("sender", "fullName profilePic nativeLanguage learningLanguage")
+        .lean(),
       FriendRequest.find({
         sender: req.user.id,
         status: "accepted",
-      }).populate("recipient", "fullName profilePic"),
+      })
+        .populate("recipient", "fullName profilePic")
+        .lean(),
     ]);
 
     res.status(200).json({ incomingReqs, acceptedReqs });
@@ -158,7 +168,9 @@ export async function getOutgoingFriendReqs(req, res) {
     const outgoingRequests = await FriendRequest.find({
       sender: req.user.id,
       status: "pending",
-    }).populate("recipient", "fullName profilePic nativeLanguage learningLanguage");
+    })
+      .populate("recipient", "fullName profilePic nativeLanguage learningLanguage")
+      .lean();
 
     res.status(200).json(outgoingRequests);
   } catch (error) {
