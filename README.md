@@ -10,7 +10,7 @@
 ## 🖼️ Screenshots
 
 ### 🔐 Login Page
-![Login](./images/login.png)
+![Login](s.png)
 
 ---
 
