@@ -11,8 +11,8 @@ export async function getRecommendedUsers(req, res) {
     let limit = parseInt(req.query.limit) || 20; // Default to 20 users per page
     
     // Validate pagination parameters
-    if (isNaN(page) || page < 1) page = 1;
-    if (isNaN(limit) || limit < 1) limit = 20;
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 20;
     if (limit > 100) limit = 100; // Cap at 100 to prevent excessive data loading
     
     const skip = (page - 1) * limit;
@@ -112,26 +112,31 @@ export async function acceptFriendRequest(req, res) {
 
     // Use a single bulkWrite operation for better performance
     // This updates both users in one database round trip
-    await User.bulkWrite([
-      {
-        updateOne: {
-          filter: { _id: friendRequest.sender },
-          update: { $addToSet: { friends: friendRequest.recipient } },
+    try {
+      await User.bulkWrite([
+        {
+          updateOne: {
+            filter: { _id: friendRequest.sender },
+            update: { $addToSet: { friends: friendRequest.recipient } },
+          },
         },
-      },
-      {
-        updateOne: {
-          filter: { _id: friendRequest.recipient },
-          update: { $addToSet: { friends: friendRequest.sender } },
+        {
+          updateOne: {
+            filter: { _id: friendRequest.recipient },
+            update: { $addToSet: { friends: friendRequest.sender } },
+          },
         },
-      },
-    ]);
+      ]);
 
-    // Update friend request status
-    friendRequest.status = "accepted";
-    await friendRequest.save();
+      // Update friend request status only after successful user updates
+      friendRequest.status = "accepted";
+      await friendRequest.save();
 
-    res.status(200).json({ message: "Friend request accepted" });
+      res.status(200).json({ message: "Friend request accepted" });
+    } catch (bulkWriteError) {
+      console.error("Error updating friend lists:", bulkWriteError.message);
+      return res.status(500).json({ message: "Failed to update friend lists" });
+    }
   } catch (error) {
     console.log("Error in acceptFriendRequest controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
