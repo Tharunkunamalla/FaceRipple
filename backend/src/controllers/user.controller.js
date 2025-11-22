@@ -6,13 +6,28 @@ export async function getRecommendedUsers(req, res) {
     const currentUserId = req.user.id;
     const currentUser = req.user;
 
+    // Add pagination support to prevent loading too many users at once
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 20; // Default to 20 users per page
+    
+    // Validate pagination parameters
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 20;
+    if (limit > 100) limit = 100; // Cap at 100 to prevent excessive data loading
+    
+    const skip = (page - 1) * limit;
+
     const recommendedUsers = await User.find({
       $and: [
         { _id: { $ne: currentUserId } }, //exclude current user
         { _id: { $nin: currentUser.friends } }, // exclude current user's friends
         { isOnboarded: true },
       ],
-    });
+    })
+      .limit(limit)
+      .skip(skip)
+      .lean(); // Use lean() for better performance when no document methods are needed
+
     res.status(200).json(recommendedUsers);
   } catch (error) {
     console.error("Error in getRecommendedUsers controller", error.message);
@@ -24,7 +39,8 @@ export async function getMyFriends(req, res) {
   try {
     const user = await User.findById(req.user.id)
       .select("friends")
-      .populate("friends", "fullName profilePic nativeLanguage learningLanguage");
+      .populate("friends", "fullName profilePic nativeLanguage learningLanguage")
+      .lean(); // Use lean() for better performance when no document methods are needed
 
     res.status(200).json(user.friends);
   } catch (error) {
@@ -94,20 +110,35 @@ export async function acceptFriendRequest(req, res) {
       return res.status(403).json({ message: "You are not authorized to accept this request" });
     }
 
-    friendRequest.status = "accepted";
-    await friendRequest.save();
+    // Use a single bulkWrite operation for better performance
+    // This updates both users in one database round trip
+    try {
+      await User.bulkWrite([
+        {
+          updateOne: {
+            filter: { _id: friendRequest.sender },
+            update: { $addToSet: { friends: friendRequest.recipient } },
+          },
+        },
+        {
+          updateOne: {
+            filter: { _id: friendRequest.recipient },
+            update: { $addToSet: { friends: friendRequest.sender } },
+          },
+        },
+      ]);
 
-    // add each user to the other's friends array
-    // $addToSet: adds elements to an array only if they do not already exist.
-    await User.findByIdAndUpdate(friendRequest.sender, {
-      $addToSet: { friends: friendRequest.recipient },
-    });
+      // Update friend request status only after successful user updates
+      // Note: For full atomicity, this should be wrapped in a MongoDB transaction
+      // which requires a replica set configuration
+      friendRequest.status = "accepted";
+      await friendRequest.save();
 
-    await User.findByIdAndUpdate(friendRequest.recipient, {
-      $addToSet: { friends: friendRequest.sender },
-    });
-
-    res.status(200).json({ message: "Friend request accepted" });
+      res.status(200).json({ message: "Friend request accepted" });
+    } catch (bulkWriteError) {
+      console.error("Error updating friend lists:", bulkWriteError.message);
+      return res.status(500).json({ message: "Failed to update friend lists" });
+    }
   } catch (error) {
     console.log("Error in acceptFriendRequest controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
@@ -116,15 +147,21 @@ export async function acceptFriendRequest(req, res) {
 
 export async function getFriendRequests(req, res) {
   try {
-    const incomingReqs = await FriendRequest.find({
-      recipient: req.user.id,
-      status: "pending",
-    }).populate("sender", "fullName profilePic nativeLanguage learningLanguage");
-
-    const acceptedReqs = await FriendRequest.find({
-      sender: req.user.id,
-      status: "accepted",
-    }).populate("recipient", "fullName profilePic");
+    // Use Promise.all to execute both queries in parallel for better performance
+    const [incomingReqs, acceptedReqs] = await Promise.all([
+      FriendRequest.find({
+        recipient: req.user.id,
+        status: "pending",
+      })
+        .populate("sender", "fullName profilePic nativeLanguage learningLanguage")
+        .lean(),
+      FriendRequest.find({
+        sender: req.user.id,
+        status: "accepted",
+      })
+        .populate("recipient", "fullName profilePic")
+        .lean(),
+    ]);
 
     res.status(200).json({ incomingReqs, acceptedReqs });
   } catch (error) {
@@ -138,7 +175,9 @@ export async function getOutgoingFriendReqs(req, res) {
     const outgoingRequests = await FriendRequest.find({
       sender: req.user.id,
       status: "pending",
-    }).populate("recipient", "fullName profilePic nativeLanguage learningLanguage");
+    })
+      .populate("recipient", "fullName profilePic nativeLanguage learningLanguage")
+      .lean();
 
     res.status(200).json(outgoingRequests);
   } catch (error) {
