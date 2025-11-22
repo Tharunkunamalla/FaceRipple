@@ -20,17 +20,17 @@
 ---
 
 ### 🏠 Home Page with Friends List
-![Home Page](./images/home.png)
+![Home Page](s2.png)
 
 ---
 
 ### 🧑‍🤝‍🧑 Send Friend Request
-![Friend Request](./images/friend-request.png)
+![Friend Request](s3.png)
 
 ---
 
 ### 🌗 Theme's Toggle
-![Theme Toggle](./images/theme-toggle.png)
+![Theme Toggle](s4.png)
 
 ---
 
