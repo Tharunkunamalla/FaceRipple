@@ -15,7 +15,7 @@
 ---
 
 ### ✍️ Sign-Up Page
-![Sign Up](s1.png)
+![Sign Up](s2.png)
 
 ---
 
