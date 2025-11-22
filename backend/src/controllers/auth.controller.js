@@ -61,7 +61,11 @@ export async function signup(req, res) {
       secure: process.env.NODE_ENV !== "development",
     });
 
-    res.status(201).json({success: true, user: newUser});
+    // Return user without password for security
+    const userResponse = newUser.toObject();
+    delete userResponse.password;
+
+    res.status(201).json({success: true, user: userResponse});
   } catch (error) {
     console.log("Error in signup controller", error);
     res.status(500).json({message: "Internal Server Error"});
@@ -76,6 +80,7 @@ export async function login(req, res) {
       return res.status(400).json({message: "All fields are required"});
     }
 
+    // Find user - need full document for matchPassword method
     const user = await User.findOne({email});
     if (!user)
       return res.status(401).json({message: "Invalid email or password"});
@@ -95,7 +100,11 @@ export async function login(req, res) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    res.status(200).json({success: true, user});
+    // Return user without password for security
+    const userResponse = user.toObject();
+    delete userResponse.password;
+
+    res.status(200).json({success: true, user: userResponse});
   } catch (error) {
     console.log("Error in login controller", error.message);
     res.status(500).json({message: "Internal Server Error"});

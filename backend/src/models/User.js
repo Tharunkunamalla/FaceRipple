@@ -76,6 +76,12 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   // this is to compare the password entered by the user with the hashed password in the database
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
+// Add indexes for frequently queried fields to improve performance
+userSchema.index({ email: 1 }); // Already unique, but explicit index for clarity
+userSchema.index({ isOnboarded: 1 }); // For filtering onboarded users
+userSchema.index({ friends: 1 }); // For friend lookups
+
 // this should be below the userSchema then the model gets password hashed
 const User = mongoose.model("User", userSchema);
 
