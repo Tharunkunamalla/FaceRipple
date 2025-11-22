@@ -95,16 +95,6 @@ npm run dev
 
 ---
 
-## 📸 Summary of UI
-
-| Feature         | Screenshot                          |
-| --------------- | ----------------------------------- |
-| Login Page      | ![Login](s1.png)        |
-| Sign-Up Page    | ![SignUp](./images/signup.png)      |
-| Home Page       | ![Home](./images/home.png)          |
-| Friend Requests | ![FR](./images/friend-request.png)  |
-| Theme Toggle    | ![Theme](./images/theme-toggle.png) |
-
 ---
 
 ## 🙋‍♂️ Author
