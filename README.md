@@ -99,7 +99,7 @@ npm run dev
 
 | Feature         | Screenshot                          |
 | --------------- | ----------------------------------- |
-| Login Page      | ![Login](./images/login.png)        |
+| Login Page      | ![Login](s1.png)        |
 | Sign-Up Page    | ![SignUp](./images/signup.png)      |
 | Home Page       | ![Home](./images/home.png)          |
 | Friend Requests | ![FR](./images/friend-request.png)  |
