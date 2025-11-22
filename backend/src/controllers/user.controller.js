@@ -129,6 +129,8 @@ export async function acceptFriendRequest(req, res) {
       ]);
 
       // Update friend request status only after successful user updates
+      // Note: For full atomicity, this should be wrapped in a MongoDB transaction
+      // which requires a replica set configuration
       friendRequest.status = "accepted";
       await friendRequest.save();
 
