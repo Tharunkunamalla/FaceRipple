@@ -7,7 +7,7 @@
 
 ---
 
-## 🖼️ Screenshots
+## 🖼️ UI
 
 ### 🔐 Login Page
 ![Login](s.png)
